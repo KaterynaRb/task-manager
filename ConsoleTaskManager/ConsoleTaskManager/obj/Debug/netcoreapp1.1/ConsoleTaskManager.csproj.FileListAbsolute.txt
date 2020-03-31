@@ -1,0 +1,10 @@
+D:\study\crashCourse\homework\ConsoleTaskManager\ConsoleTaskManager\bin\Debug\netcoreapp1.1\ConsoleTaskManager.deps.json
+D:\study\crashCourse\homework\ConsoleTaskManager\ConsoleTaskManager\bin\Debug\netcoreapp1.1\ConsoleTaskManager.runtimeconfig.json
+D:\study\crashCourse\homework\ConsoleTaskManager\ConsoleTaskManager\bin\Debug\netcoreapp1.1\ConsoleTaskManager.runtimeconfig.dev.json
+D:\study\crashCourse\homework\ConsoleTaskManager\ConsoleTaskManager\bin\Debug\netcoreapp1.1\ConsoleTaskManager.dll
+D:\study\crashCourse\homework\ConsoleTaskManager\ConsoleTaskManager\bin\Debug\netcoreapp1.1\ConsoleTaskManager.pdb
+D:\study\crashCourse\homework\ConsoleTaskManager\ConsoleTaskManager\obj\Debug\netcoreapp1.1\ConsoleTaskManager.csprojResolveAssemblyReference.cache
+D:\study\crashCourse\homework\ConsoleTaskManager\ConsoleTaskManager\obj\Debug\netcoreapp1.1\ConsoleTaskManager.csproj.CoreCompileInputs.cache
+D:\study\crashCourse\homework\ConsoleTaskManager\ConsoleTaskManager\obj\Debug\netcoreapp1.1\ConsoleTaskManager.AssemblyInfo.cs
+D:\study\crashCourse\homework\ConsoleTaskManager\ConsoleTaskManager\obj\Debug\netcoreapp1.1\ConsoleTaskManager.dll
+D:\study\crashCourse\homework\ConsoleTaskManager\ConsoleTaskManager\obj\Debug\netcoreapp1.1\ConsoleTaskManager.pdb
