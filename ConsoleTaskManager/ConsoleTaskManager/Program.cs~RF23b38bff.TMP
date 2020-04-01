@@ -30,10 +30,10 @@ namespace ConsoleTaskManager
                         reminder.CreateTask(taskManager.remList);
                         break;
                     case "alltodo":
-                        taskManager.AllSavedToDo("ToDo.json");
+                        //taskManager.AllSavedTasks("ToDo.json");
                         break;
                     case "allrem":
-                        taskManager.AllSavedRem("Reminders.json");
+                        //taskManager.AllSavedTasks("Reminders.json");
                         break;
                     case "newtodo":
                         taskManager.AllNewToDoTasks();
@@ -115,7 +115,7 @@ namespace ConsoleTaskManager
     {
         private string title;
         private string description;
-        public DateTime deadline;
+        private DateTime deadline;
 
         public void CreateTask(Dictionary<string, string> remList)
         {
@@ -181,34 +181,24 @@ namespace ConsoleTaskManager
         {
             string currdir = Directory.GetCurrentDirectory();
             string path = Path.Combine(currdir, fileName);
-            //if (File.Exists(path))
-            //{
-                string content;
-                content = File.ReadAllText(path);
-                toDoList = JsonConvert.DeserializeObject<Dictionary<string, string>>(content);
-                foreach(KeyValuePair<string, string> kvp in toDoList)
-                {
-                    Console.WriteLine("Title = {0}, Description: {1}", kvp.Key, kvp.Value);
-                }
-            //}
-            //else Console.WriteLine("You have no saved tasks");
+            string content;
+            if (File.Exists(path)) content = File.ReadAllText(path);
+            else content = "You have no saved tasks";
+            Console.WriteLine(content);
+
+            toDoList = JsonConvert.DeserializeObject<Dictionary<string, string>>(content);
         }
 
-        public void AllSavedRem(string fileName)
+        public void AllSavedToRem(string fileName)
         {
             string currdir = Directory.GetCurrentDirectory();
             string path = Path.Combine(currdir, fileName);
-            //if (File.Exists(path))
-            //{
-                string content;
-                content = File.ReadAllText(path);
-                remList = JsonConvert.DeserializeObject<Dictionary<string, string>>(content);
-                foreach (KeyValuePair<string, string> kvp in remList)
-                {
-                    Console.WriteLine("Title = {0}, Description: {1}", kvp.Key, kvp.Value);
-                }
-            //}
-            //else Console.WriteLine("You have no saved tasks");
+
+
+            string content;
+            if (File.Exists(path)) content = File.ReadAllText(path);
+            else content = "You have no saved tasks";
+            Console.WriteLine(content);
         }
 
         public void AllNewToDoTasks()
@@ -230,17 +220,40 @@ namespace ConsoleTaskManager
         public void AllToDoToFile(string fileName)
         {
             string task = JsonConvert.SerializeObject(toDoList, Formatting.Indented);
+            //Console.WriteLine(task);
             string currdir = Directory.GetCurrentDirectory();
             string path = Path.Combine(currdir, fileName);
             File.AppendAllText(path, task);
+
+            //foreach (KeyValuePair<string, string> kvp in toDoList)
+            //{
+
+            //    string title = kvp.Key;
+            //    string description = kvp.Value;
+            //    string currdir = Directory.GetCurrentDirectory();
+            //    string path = Path.Combine(currdir, fileName);
+            //    string task = "\nTitle: " + title + "| Description: |" + description;
+            //    File.AppendAllText(path, task);
+            //}
         }
 
         public void AllRemToFile(string fileName)
         {
             string task = JsonConvert.SerializeObject(remList, Formatting.Indented);
+            //Console.WriteLine(task);
             string currdir = Directory.GetCurrentDirectory();
             string path = Path.Combine(currdir, fileName);
             File.AppendAllText(path, task);
+
+            //foreach (KeyValuePair<string, string> kvp in remList)
+            //{
+            //    string title = kvp.Key;
+            //    string description = kvp.Value;
+            //    string currdir = Directory.GetCurrentDirectory();
+            //    string path = Path.Combine(currdir, fileName);
+            //    string task = "\nTitle: " + title + "| Description: |" + description;
+            //    File.AppendAllText(path, task);
+            //}
         }
 
         public void ToRemind(string fileName)
@@ -249,19 +262,28 @@ namespace ConsoleTaskManager
             DateTime deadline;
             string currdir = Directory.GetCurrentDirectory();
             string path = Path.Combine(currdir, fileName);
-            string content;
-            content = File.ReadAllText(path);
-            remList = JsonConvert.DeserializeObject<Dictionary<string, string>>(content);
-            foreach (KeyValuePair<string, string> kvp in remList)
+            List<string> list = new List<string>();
+            int index = 0;
+            if (File.Exists(path))
             {
-                string task = kvp.Value.Substring(kvp.Value.IndexOf("| Deadline: |") + "| Deadline: |".Length, 10);
-                if (DateTime.TryParse(task, out deadline))
+                foreach (string line in File.ReadLines(path))
                 {
-                    if (DateTime.Compare(deadline, today) == 0)
+                    if (line.Contains("Title: ") & line.Contains("| Description: |") & line.Contains("| Deadline: |"))
                     {
-                        Console.WriteLine("Your tasks for today:");
-                        Console.WriteLine(kvp.Key);
-                        Console.WriteLine(kvp.Value);
+                        list.Add(line.Substring(line.IndexOf("| Deadline: |") + "| Deadline: |".Length, 10)); // get deadline
+                        list.Add(line);
+                    }
+                }
+                foreach (string task in list)
+                {
+                    if (DateTime.TryParse(task, out deadline))
+                    {
+                        if (DateTime.Compare(deadline, today) == 0)
+                        {
+                            index = list.IndexOf(task, index);
+                            Console.WriteLine("Your tasks for today:");
+                            Console.WriteLine(list[index + 1]);
+                        }
                     }
                 }
             }
